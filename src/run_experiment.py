@@ -28,6 +28,7 @@ argparser.add_argument("--steering-malfunction", default=0.25, type=float, help=
 argparser.add_argument("--simulation-time", default=60, type=int, help="Simulation time in seconds (default: 60)")
 argparser.add_argument("--waypoints-resolution", default=1, type=int, help="Waypoints resolution in meters (default: 1)")
 argparser.add_argument("--swift", default=0, type=int, help="Swift malfunction direction every n seconds. 0 or negative to disable (default: 0)")
+argparser.add_argument("--vehicle-wheelbase", type=float, default=2.3, help="Vehicle's wheelbase length (default: 2.3)")
 
 args = argparser.parse_args()
 
@@ -53,6 +54,7 @@ DYNAMICS_SIZE = STATE_SIZE - 1 # use yaw as angle
 LOOK_AHEAD = args.look_ahead
 ROAD_DEGREE = args.road_degree
 V_REF = 100 # km/h
+VEHICLE_WHEELBASE = args.vehicle_wheelbase
 
 def format_e(n):
     a = '%E' % n
@@ -80,7 +82,7 @@ carla_env = CarlaInterface(default_dt=DT, host=args.host, port=args.port)
 def bicycle(x):
     throttle, steer, vx, vy, ax, ay, vr = x
     new_x = [throttle, steer] + list(np.multiply([1, 0, vx, vy, ax, ay, vr], MAX_STAT[2:]))
-    return np.array(bicycle_model_dynamics_center(new_x)) * PREDICT_DT
+    return np.array(bicycle_model_dynamics_center(new_x, vehicle_wheelbase=VEHICLE_WHEELBASE)) * PREDICT_DT
 
 def localize(t, x):
     """

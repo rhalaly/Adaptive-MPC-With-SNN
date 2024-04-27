@@ -1,4 +1,4 @@
-# Continuous Adaptive Nonlinear Model Predictive Control Using Spiking Neural Networks
+# Continuous adaptive nonlinear model predictive control using spiking neural networks and real-time learning
 
 This repository contains the source code and figures of our paper.
 
@@ -7,22 +7,29 @@ This repository contains the source code and figures of our paper.
 
 ## Paper Details
 
-**Title:** Continuous Adaptive Nonlinear Model Predictive Control Using Spiking Neural Networks
+**Title:** Continuous adaptive nonlinear model predictive control using spiking neural networks and real-time learning
 
-**Abstract:** This paper introduces a novel continuous adaptive non-linear Model Predictive Control (MPC) approach using Spiking
-Neural Networks (SNNs) for controlling dynamic systems. This approach addresses challenges related to the dependency of
-MPC on accurately modeling complex system dynamics. Our approach significantly reduces dynamic error and augments
-model accuracy, while simultaneously addressing unforeseen situations. The model’s efficacy has been meticulously tested
-under standard, malfunctioning steering, and swift malfunctioning steering scenarios, measuring its performance against
-traditional MPC controllers with a fixed model. The results reveal significant improvements in dynamic error; up to 89.87%
-with only 5 spiking neurons and up to 96.95% with 5000. These promising results pave the way for novel applications in
-real-time control and stimulate further studies in the adaptive control realm utilizing spiking neural networks.
+**Abstract:** Model predictive control (MPC) is a prominent control paradigm providing accurate state
+ prediction and subsequent control actions for intricate dynamical systems with applications
+ ranging from autonomous driving to star tracking. However, there is an apparent discrepancy
+ between the model’s mathematical description and its behavior in real-world conditions, affecting
+ its performance in real-time. In this work, we propose a novel neuromorphic (brain-inspired)
+ spiking neural network for continuous adaptive non-linear MPC. Utilizing real-time learning, our
+ design significantly reduces dynamic error and augments model accuracy, while simultaneously
+ addressing unforeseen situations. We evaluated our framework using real-world scenarios in
+ autonomous driving, implemented in a physics-driven simulation. We tested our design with
+ various vehicles (from a Tesla Model 3 to an Ambulance) experiencing malfunctioning and swift
+ steering scenarios. We demonstrate significant improvements in dynamic error rate compared with
+ traditional MPC implementation with up to 89.15% median prediction error reduction with 5
+ spiking neurons and up to 96.08% with 5000 neurons. Our results may pave the way for novel
+ applications in real-time control and stimulate further studies in the adaptive control realm with
+ spiking neural networks.
 
 **Authors:** Raz Halaly, Elishai Ezra Tsur
 
 **Keywords:** autonomous driving, neuromorphic control, spiking neural networks (SNN), model predictive control (MPC), neural engineering framework (NEF), energy efficiency, motion planning, computational frameworks
 
-**Publication:** TBD
+**Publication:** IOPScience Neuromorphic Computing and Engineering ([Link](https://iopscience.iop.org/article/10.1088/2634-4386/ad4209))
 
 ## Table of Contents
 
@@ -97,6 +104,7 @@ pip install -r requirements.txt
                       [--simulation-time SIMULATION_TIME]
                       [--waypoints-resolution WAYPOINTS_RESOLUTION]
                       [--swift SWIFT]
+                      [--vehicle-wheelbase]
     ```
 
     Where the arguments are:
@@ -119,6 +127,7 @@ pip install -r requirements.txt
     | `--simulation-time SIMULATION_TIME` | `60` | The simulation time in seconds. |
     | `--waypoints-resolution WAYPOINTS_RESOLUTION` | `1` | The waypoints resolution in meters. |
     | `--swift SWIFT` | `0` | The swift malfunction direction every n seconds. 0 or negative to disable. |
+    | `--vehicle-wheelbase` | `2.3` | The vehicle wheelbase in meters. |
 
     The script is configured to run the experiment `Experiment II` from the paper. To run `Experiment I` use:
     
@@ -131,6 +140,17 @@ pip install -r requirements.txt
     ```
     python run_experiment.py --map Town06 --waypoints 263,7,55,314 --simulation-time 40 --swift 10 --car <vehicle-blueprint>
     ```
+
+The vehicle wheelbase can be set using the `--vehicle-wheelbase` argument. We used the following values for the experiments:
+| Vehicle | Wheelbase |
+| --- | --- |
+| Ford Ambulance | 4.55 |
+| Mini Cooper S | 2.467 |
+| Tesla Cybertruck | 3.807 |
+| Mitsubishi Fusorosa | 3.995 |
+| Tesla Model 3 | 2.875 |
+| Ford Mustang | 2.7432 |
+| Volkswagen T2 (2021) | 2.4 |
     
 ## Data
 
@@ -183,9 +203,15 @@ The `waypoints_town04.csv` and `waypoints_town06.csv` files contain the waypoint
 If you use our work in your research, please cite it using the following BibTeX entry:
 
 ```bibtex
-TBD
+@article{10.1088/2634-4386/ad4209,
+	author={Halaly, Raz and Ezra Tsur, Elishai},
+	title={Continuous adaptive nonlinear model predictive control using spiking neural networks and real-time learning},
+	journal={Neuromorphic Computing and Engineering },
+	url={http://iopscience.iop.org/article/10.1088/2634-4386/ad4209},
+	year={2024},
+	abstract={Model Predictive Control (MPC) is a prominent control paradigm providing accurate state prediction and subsequent control actions for intricate dynamical systems with applications ranging from autonomous driving to star tracking. However, there is an apparent discrepancy between the model’s mathematical description and its behavior in real-world conditions, affecting its performance in real-time. In this work, we propose a novel neuromorphic spiking neural network for continuous adaptive non-linear MPC. By using real-time learning, our design significantly reduces dynamic error and augments model accuracy, while simultaneously addressing unforeseen situations. We evaluated our framework using real-world scenarios in autonomous driving, implemented in a physics-driven simulation. We tested our design with various vehicles (from a Tesla Model 3 to an Ambulance) experiencing malfunctioning and swift steering scenarios. We demonstrate significant improvements in dynamic error rate compared with traditional MPC implementation with up to 89.87% median prediction error reduction with 5 spiking neurons and up to 96.95% with 5000 neurons. Our results may pave the way for novel applications in real-time control and stimulate further studies in the adaptive control realm with spiking neural networks.}
+}
 ```
-
 
 ## License
 
